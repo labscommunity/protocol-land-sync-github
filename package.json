@@ -1,6 +1,6 @@
 {
     "name": "protocol-land-sync-github",
-    "version": "0.0.1",
+    "version": "0.0.4",
     "description": "Protocol Land sync github",
     "type": "module",
     "main": "dist/index.js",

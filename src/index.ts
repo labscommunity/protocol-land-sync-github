@@ -21,10 +21,9 @@ export const main = async () => {
     const currentDirectory = process.cwd();
 
     const repoPath = path.join(currentDirectory, tmpPath, repo.id);
-    const repoUsername = (process.env.GH_REPO_NAME as string).split('/')[0];
     let destUrl;
     if (process.env.GITHUB_TOKEN) {
-        destUrl = `https://${repoUsername}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GH_REPO_NAME}.git`;
+        destUrl = `https://oauth2:${process.env.GITHUB_TOKEN}@github.com/${process.env.GH_REPO_NAME}.git`;
     } else {
         destUrl = `git@github.com:${process.env.GH_REPO_NAME}.git`;
     }

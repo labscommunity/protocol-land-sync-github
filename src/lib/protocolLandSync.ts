@@ -76,11 +76,16 @@ export const syncProtocolLandRepoToGithub = async (
         const forcePush = process.env.FORCE_PUSH === 'true';
         const args = ['push', destUrl, '--all'];
         if (forcePush) args.splice(1, 0, '-f');
-        const pushed = await runCommand('git', args, { forwardStdOut: true });
+        const pushed = await runCommand('git', args, {
+            forwardStdOut: true,
+            forwardStdErr: true,
+        });
 
         if (!pushed) {
-            log('Failed to push to remote!', { color: 'red' });
-            process.exit(0);
+            log('Failed to sync to GitHub!', { color: 'red' });
+            process.exit(1);
+        } else {
+            log('Successfully synced to GitHub!', { color: 'green' });
         }
     } catch (error: any) {
         log(error?.message || error, { color: 'red' });
@@ -109,28 +114,42 @@ export const githubInitialize = async () => {
     }
 };
 
-/** @notice spawns a command with args, optionally forwarding stdout to stderr */
+/**
+ * @notice spawns a command with args, optionally forwarding stdout to the console
+ * and always logging stderr to the console.
+ */
 const runCommand = async (
     command: string,
     args: string[],
-    options?: { forwardStdOut: boolean }
+    options?: { forwardStdOut: boolean; forwardStdErr: boolean }
 ) => {
-    log(`Running '${command} ${args.join(' ')}' ...`);
     const child = spawn(command, args, {
         shell: true,
-        stdio: ['pipe', 'pipe', 'pipe'],
+        stdio: ['inherit', 'pipe', 'pipe'], // 'inherit' for stdin to keep it interactive if needed
     });
-    return await new Promise<boolean>((resolve, reject) => {
+
+    return new Promise<boolean>((resolve, reject) => {
+        // Handle stdout
+        child.stdout.on('data', (data) => {
+            if (options?.forwardStdOut) {
+                console.log(data.toString());
+            }
+        });
+
+        // Handle stderr
+        child.stderr.on('data', (data) => {
+            if (options?.forwardStdOut) {
+                console.log(data.toString());
+            }
+        });
+
         child.on('error', reject);
-        if (options?.forwardStdOut) {
-            // forward stdout to stderr (to be shown in console)
-            child.stdout.on('data', (data) => log);
-        }
+
         child.on('close', (code) => {
             if (code === 0) {
                 resolve(true);
             } else {
-                log(`Command Failed. Exit code: ${code}`);
+                log(`Command failed with exit code: ${code}`, { color: 'red' });
                 resolve(false);
             }
         });

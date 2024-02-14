@@ -4,9 +4,7 @@ import { withAsync } from './withAsync';
 import type { JsonWebKey } from 'crypto';
 
 export async function getAddress(wallet?: JsonWebKey) {
-    return await initArweave().wallets.jwkToAddress(
-        wallet ? wallet : getWallet()
-    );
+    return await initArweave().wallets.jwkToAddress(wallet ?? getWallet());
 }
 
 export function getActivePublicKey() {
