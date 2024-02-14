@@ -3,7 +3,7 @@ import { spawn } from 'child_process';
 import { arweaveDownload } from './arweaveHelper';
 import { unpackGitRepo } from './zipHelper';
 import type { Repo } from '../types';
-import { clearCache, log } from './common';
+import { clearCache, getWallet, log, ownerOrContributor } from './common';
 import { decryptRepo } from './privateRepo';
 
 export const downloadProtocolLandRepo = async (
@@ -26,7 +26,7 @@ export const downloadProtocolLandRepo = async (
         log(`Please create a repo in https://protocol.land first`, {
             color: 'green',
         });
-        process.exit(0);
+        process.exit(1);
     }
 
     // if not, download repo data from arweave
@@ -37,13 +37,23 @@ export const downloadProtocolLandRepo = async (
         log('Check connection or repo integrity in https://protocol.land', {
             color: 'green',
         });
-        process.exit(0);
+        process.exit(1);
     }
 
     const isPrivate = repo?.private || false;
     const privateStateTxId = repo?.privateStateTxId;
 
     if (isPrivate && privateStateTxId) {
+        const wallet = getWallet();
+        if (!wallet) {
+            log('No wallet found', { color: 'red' });
+            process.exit(1);
+        }
+        const isOwnerOrContributor = await ownerOrContributor(repo, wallet);
+        if (!isOwnerOrContributor) {
+            log('You are not an owner or a contributor!', { color: 'red' });
+            process.exit(1);
+        }
         arrayBuffer = await decryptRepo(arrayBuffer, privateStateTxId);
     }
 
@@ -56,7 +66,7 @@ export const downloadProtocolLandRepo = async (
         log('Check repo integrity in https://protocol.land', {
             color: 'green',
         });
-        process.exit(0);
+        process.exit(1);
     }
 
     // rm -rf everything but the bare repo and warp cache (discard stdout)

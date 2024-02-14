@@ -10,6 +10,7 @@ const ANSI_GREEN = '\x1b[32m';
 
 export const PL_TMP_PATH = '.protocol.land';
 export const CONTRACT_TXID = 'B8gmo1897cyCjShP7QRe1XndatqLMieeymxehBK_oL8';
+let wallet: JsonWebKey | null = null;
 
 export const log = (message: any, options?: { color: 'red' | 'green' }) => {
     if (!options) console.error(` [PL] ${message}`);
@@ -23,8 +24,6 @@ export const log = (message: any, options?: { color: 'red' | 'green' }) => {
     }
 };
 
-let wallet: JsonWebKey | null = null;
-
 export const getWallet = () => {
     if (wallet) return wallet as any;
     try {
@@ -35,36 +34,12 @@ export const getWallet = () => {
     }
 };
 
-export const ownerOrContributor = async (
-    repo: Repo,
-    wallet: JsonWebKey,
-    options: { pushing: boolean } = { pushing: false }
-) => {
-    const { pushing } = options;
+export const ownerOrContributor = async (repo: Repo, wallet: JsonWebKey) => {
     const address = await getAddress(wallet);
     const ownerOrContrib =
         repo.owner === address ||
         repo.contributors.some((contributor) => contributor === address);
-    if (!ownerOrContrib) notOwnerOrContributorMessage({ warn: !pushing });
     return ownerOrContrib;
-};
-
-export const notOwnerOrContributorMessage = (
-    params: { warn: boolean } = { warn: false }
-) => {
-    const { warn } = params;
-    if (warn) {
-        log(
-            `You are not the repo owner nor a contributor. You will need an owner or contributor jwk to push to this repo.`,
-            { color: 'green' }
-        );
-    } else {
-        log(
-            `You are not the repo owner nor a contributor. You can't push to this repo.`,
-            { color: 'red' }
-        );
-    }
-    return null;
 };
 
 export function clearCache(
@@ -80,10 +55,3 @@ export function clearCache(
 
 export const waitFor = (delay: number) =>
     new Promise((res) => setTimeout(res, delay));
-
-export const exitWithError = (message: string) => {
-    log(``);
-    log(`${message}`);
-    log(``);
-    process.exit(1);
-};

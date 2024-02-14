@@ -34,9 +34,7 @@ export async function getRepo(id: string, destpath?: string) {
     // let warp throw error if it can't retrieve the repository
     const response = await pl.viewState({
         function: 'getRepository',
-        payload: {
-            id,
-        },
+        payload: { id },
     });
     return response.result as Repo;
 }

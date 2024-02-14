@@ -10,12 +10,12 @@ export async function getAddress(wallet?: JsonWebKey) {
 export function getActivePublicKey() {
     const wallet = getWallet();
     if (!wallet) {
-        process.exit(0);
+        process.exit(1);
     }
     return wallet.n;
 }
 
-function initArweave() {
+export function initArweave() {
     return Arweave.init({
         host: 'arweave.net',
         port: 443,

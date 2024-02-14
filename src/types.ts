@@ -17,8 +17,3 @@ export type PrivateState = {
     version: string;
     pubKeys: string[];
 };
-
-export type Tag = {
-    name: string;
-    value: string;
-};
