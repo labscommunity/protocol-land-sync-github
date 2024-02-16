@@ -24,17 +24,20 @@ To sync a repository from Protocol Land to GitHub, you should set up a GitHub Ac
 
 2. **(Optional)** Add a new secret with `WALLET` for "Name" and your Arweave wallet's JWK in the `Secret` field, and click the "Add secret" button. `WALLET` is only required for Protocol Land private repositories to sync to GitHub.
 
-3. **(Optional)** Add a new secret with `FORCE_PUSH` for "Name" and `true` or `false` in the `Secret` field, and click the "Add secret" button. You could also write it in the workflow file itself instead of using a secret for it.
+3. Add a new secret with `PL_REPO_ID` for `Name` and your Protocol Land Repo ID in the `Secret` field, and click the `Add secret` button. You could also write it in the workflow file itself instead of using a secret for it. For example: A Protocol Land Repo looks like: <https://protocol.land/#/repository/6ace6247-d267-463d-b5bd-7e50d98c3693> and `6ace6247-d267-463d-b5bd-7e50d98c3693` is the Repo ID.
 
-4. Add a new secret with `PL_REPO_ID` for `Name` and your Protocol Land Repo ID in the `Secret` field, and click the `Add secret` button. You could also write it in the workflow file itself instead of using a secret for it. For example: A Protocol Land Repo looks like: <https://protocol.land/#/repository/6ace6247-d267-463d-b5bd-7e50d98c3693> and `6ace6247-d267-463d-b5bd-7e50d98c3693` is the Repo ID.
-
-5. Setup GitHub Workflow: Now clone the repository and Create a file called `protocol-land-github-sync.yml` in a subfolder called `.github/workflows` under your repo's root (create the folder if it doesn't exist). Paste this workflow content below and commit and push to both GitHub and Protocol Land.
+4. Setup GitHub Workflow: Now clone the repository and Create a file called `protocol-land-github-sync.yml` in a subfolder called `.github/workflows` under your repo's root (create the folder if it doesn't exist). Paste this workflow content below and commit and push to both GitHub and Protocol Land.
 
 ```yaml
 name: Protocol Land to GitHub Sync
 
 on:
   workflow_dispatch:
+    inputs:
+      forcePush:
+        description: "Force push"
+        required: false
+        default: "false"
 
 permissions:
   contents: write
@@ -51,16 +54,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WALLET: ${{ secrets.WALLET }}
           PL_REPO_ID: ${{ secrets.PL_REPO_ID }}
-          FORCE_PUSH: ${{ secrets.FORCE_PUSH }}
+          FORCE_PUSH: ${{ inputs.forcePush }}
           GH_REPO_NAME: ${{ github.repository }}
 
 ```
 
 ### On Protocol Land
 
-6. Now, Make sure the repository is pushed to both GitHub and Protocol Land to start syncing from Protocol Land to GitHub.
+5. Now, Make sure the repository is pushed to both GitHub and Protocol Land to start syncing from Protocol Land to GitHub.
 
-7. As seen in the image below, Goto repository settings on Protocol Land. Then configure the following:
+6. As seen in the image below, Goto repository settings on Protocol Land. Then configure the following:
 
 ![image](https://github.com/pawanpaudel93/protocol-land-sync-github/assets/11836100/65483d12-eb1b-4453-b584-55709dce8562)
 
@@ -71,4 +74,4 @@ jobs:
 - **Personal Access Token (PAT)**: PAT is needed to trigger the GitHub workflow using an API endpoint. It is saved by encrypting with the wallet so it cannot be used by others.
   - To create PAT, goto [Fine-grained tokens](https://github.com/settings/tokens?type=beta) to create a PAT. Set a token name, expiration, repository access `(All repositories or Only select repositories)` and permissions `(Repository permissions -> Actions -> Read and write)`.
 
-8. Now if you have done all the above correctly and when you make a new commit to Protocol Land repository from UI or CLI, the GitHub workflow is triggered to sync the repository on GitHub.
+7. Now if you have done all the above correctly and when you make a new commit to Protocol Land repository from UI or CLI, the GitHub workflow is triggered to sync the repository on GitHub.
