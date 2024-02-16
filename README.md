@@ -54,7 +54,7 @@ jobs:
       - name: Sync repo to GitHub
         run: npx protocol-land-sync-github
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN || secrets.GITHUB_TOKEN }}
           WALLET: ${{ secrets.WALLET }}
           PL_REPO_ID: ${{ secrets.PL_REPO_ID }}
           FORCE_PUSH: ${{ inputs.forcePush }}
@@ -81,7 +81,7 @@ Goto repository settings on Protocol Land. Then configure the following:
 
 > [!NOTE]
 >
-> If you get this similar error: ![image](https://github.com/pawanpaudel93/protocol-land-sync-github/assets/11836100/4429b957-71a5-4b50-815a-2e56ecaeef2a) in the workflow run, you need to give an extra permission (**`Workflows > Read and write`**) to the PAT.
+> If you get this similar error: ![image](https://github.com/pawanpaudel93/protocol-land-sync-github/assets/11836100/4429b957-71a5-4b50-815a-2e56ecaeef2a) in the workflow run, you need to create a new Personal Access Token (PAT) with Repository permissions (**Contents: Read and write** and **Workflows: Read and write**). Now, add another secret named **`WORKFLOW_TOKEN`** with your PAT created as the value.
 
 3. **Synchronization Activation**:
 
