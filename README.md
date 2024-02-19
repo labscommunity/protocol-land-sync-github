@@ -76,7 +76,7 @@ Goto repository settings on Protocol Land. Then configure the following:
 
 - **Switch**: Click the switch to enable GitHub sync. You can disable it whenever GitHub Sync is not required. You can still use the `Trigger Sync` button for manual trigger of GitHub sync workflow.
 - **Repository**: Write your Github repository name with username. For example, `labscommunity/protocol-land`.
-- **Branch**: Select the branch that contains the GitHub workflow file.
+- **Branch**: Write the branch name that contains the GitHub workflow file. For example, `master`.
 - **Workflow name**: Write your workflow file name. For example, `protocol-land-github-sync.yml`.
 - **Personal Access Token (PAT)**: You'll also need a Personal Access Token (PAT) from GitHub with the appropriate permissions to trigger the GitHub workflow. This PAT is securely stored and encrypted with your wallet. To create PAT, goto [Fine-grained tokens](https://github.com/settings/tokens?type=beta) to create a PAT. Set a token name, expiration, repository access `(All repositories or Only select repositories (Recommended))` and permissions `(Repository permissions -> Actions -> Read and write)`.
 
