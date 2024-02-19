@@ -7,7 +7,7 @@ import { getAddress } from './arweaveHelper';
 import { withAsync } from './withAsync';
 
 const AMPLITUDE_TRACKING_ID = '92a463755ed8c8b96f0f2353a37b7b2';
-const PLATFORM = '@protocol.land/git-remote-helper';
+const PLATFORM = '@protocol.land/sync-github';
 
 let isInitialized = false;
 
@@ -66,27 +66,14 @@ export const trackAmplitudeAnalyticsEvent = async (
     }
 };
 
-export const trackRepositoryUpdateEvent = async (
+export const trackRepositoryGithubSyncEvent = async (
     wallet: any,
     data: Record<any, any>
 ) => {
     await trackAmplitudeAnalyticsEvent(
         'Repository',
-        'Add files to repo',
-        'Add files',
-        wallet,
-        data
-    );
-};
-
-export const trackRepositoryCloneEvent = async (
-    wallet: any,
-    data: Record<any, any>
-) => {
-    await trackAmplitudeAnalyticsEvent(
-        'Repository',
-        'Clone a repo',
-        'Clone repo',
+        'GitHub Sync a repo',
+        'GitHub Sync repo',
         wallet,
         data
     );
