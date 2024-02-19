@@ -24,7 +24,8 @@ To synchronize your Protocol Land repository with GitHub, you'll need to configu
 
 - Navigate to your GitHub repository's **Settings > Secrets and variables > Actions > New Repository Secret**.
 - **(Optional)** For syncing private repositories, add a new secret named **`WALLET`** with your Arweave wallet's JWK as the value.
-- Add another secret named **`PL_REPO_ID`** with your Protocol Land Repository ID as the value. Your Protocol Land Repo ID can be found in the repository's URL, e.g., **`6ace6247-d267-463d-b5bd-7e50d98c3693`**.
+- Add a new secret named **`PL_REPO_ID`** with your Protocol Land Repository ID as the value. Your Protocol Land Repo ID can be found in the repository's URL, e.g., **`6ace6247-d267-463d-b5bd-7e50d98c3693`**.
+- You'll also need a Personal Access Token (PAT) with the appropriate permissions to sync from Protocol Land to GitHub. To create PAT, goto [Fine-grained tokens](https://github.com/settings/tokens?type=beta) to create a PAT. Set a token name, expiration, repository access `(All repositories or Only select repositories (Recommended))` and permissions `(Repository permissions -> Contents -> Read and write, Repository permissions -> Workflows -> Read and write)`. Finally, add a new secret named **`WORKFLOW_TOKEN`** with your PAT created as the value.
 
 3. **Setting Up the GitHub Workflow**:
 
@@ -77,11 +78,7 @@ Goto repository settings on Protocol Land. Then configure the following:
 - **Repository**: Write your Github repository name with username. For example, `labscommunity/protocol-land`.
 - **Branch**: Select the branch that contains the GitHub workflow file.
 - **Workflow name**: Write your workflow file name. For example, `protocol-land-github-sync.yml`.
-- **Personal Access Token (PAT)**: You'll also need a Personal Access Token (PAT) from GitHub with the appropriate permissions to trigger the GitHub workflow. This PAT is securely stored and encrypted with your wallet. To create PAT, goto [Fine-grained tokens](https://github.com/settings/tokens?type=beta) to create a PAT. Set a token name, expiration, repository access `(All repositories or Only select repositories)` and permissions `(Repository permissions -> Actions -> Read and write)`.
-
-> [!NOTE]
->
-> If you get this similar error: ![image](https://github.com/pawanpaudel93/protocol-land-sync-github/assets/11836100/4429b957-71a5-4b50-815a-2e56ecaeef2a) in the workflow run, you need to create a new Personal Access Token (PAT) with Repository permissions (**Contents: Read and write** and **Workflows: Read and write**). Now, add another secret named **`WORKFLOW_TOKEN`** with your PAT created as the value.
+- **Personal Access Token (PAT)**: You'll also need a Personal Access Token (PAT) from GitHub with the appropriate permissions to trigger the GitHub workflow. This PAT is securely stored and encrypted with your wallet. To create PAT, goto [Fine-grained tokens](https://github.com/settings/tokens?type=beta) to create a PAT. Set a token name, expiration, repository access `(All repositories or Only select repositories (Recommended))` and permissions `(Repository permissions -> Actions -> Read and write)`.
 
 3. **Synchronization Activation**:
 
