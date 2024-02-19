@@ -1,7 +1,7 @@
 {
-    "name": "protocol-land-sync-github",
+    "name": "@protocol.land/sync-github",
     "version": "0.0.5",
-    "description": "Protocol Land sync github",
+    "description": "Sync Protocol.Land repos to GitHub",
     "type": "module",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -14,7 +14,8 @@
         "release": "pnpm run build && changeset publish"
     },
     "keywords": [
-        "protocol-land-sync-github",
+        "Protocol.Land",
+        "arweave",
         "git"
     ],
     "author": "@pawanpaudel93",
@@ -28,10 +29,10 @@
         "LICENSE",
         "README.md"
     ],
-    "homepage": "https://github.com/pawanpaudel93/protocol-land-sync-github#readme",
+    "homepage": "https://github.com/labscommunity/protocol-land-sync-github#readme",
     "repository": {
         "type": "git",
-        "url": "https://github.com/pawanpaudel93/protocol-land-sync-github.git"
+        "url": "https://github.com/labscommunity/protocol-land-sync-github.git"
     },
     "devDependencies": {
         "@changesets/cli": "^2.27.1",

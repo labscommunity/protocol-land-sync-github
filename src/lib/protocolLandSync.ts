@@ -5,6 +5,7 @@ import { unpackGitRepo } from './zipHelper';
 import type { Repo } from '../types';
 import { clearCache, getWallet, log, ownerOrContributor } from './common';
 import { decryptRepo } from './privateRepo';
+import { trackRepositoryGithubSyncEvent } from './analytics';
 
 export const downloadProtocolLandRepo = async (
     repoId: string,
@@ -78,6 +79,7 @@ export const downloadProtocolLandRepo = async (
 };
 
 export const syncProtocolLandRepoToGithub = async (
+    repo: Repo,
     repoPath: string,
     destUrl: string
 ) => {
@@ -89,6 +91,13 @@ export const syncProtocolLandRepoToGithub = async (
         const pushed = await runCommand('git', args, {
             forwardStdOut: true,
             forwardStdErr: true,
+        });
+
+        const wallet = getWallet();
+        await trackRepositoryGithubSyncEvent(wallet, {
+            repo_name: repo.name,
+            repo_id: repo.id,
+            result: pushed ? 'SUCCESS' : 'FAILED',
         });
 
         if (!pushed) {

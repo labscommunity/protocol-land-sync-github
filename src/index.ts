@@ -32,7 +32,7 @@ export const main = async () => {
         await githubInitialize();
 
         // sync to git
-        await syncProtocolLandRepoToGithub(repoPath, destUrl);
+        await syncProtocolLandRepoToGithub(repo, repoPath, destUrl);
 
         process.chdir(currentDirectory);
 

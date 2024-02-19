@@ -9,7 +9,7 @@ const ANSI_RED = '\x1b[31m';
 const ANSI_GREEN = '\x1b[32m';
 
 export const PL_TMP_PATH = '.protocol.land';
-export const CONTRACT_TXID = 'B8gmo1897cyCjShP7QRe1XndatqLMieeymxehBK_oL8';
+export const CONTRACT_TXID = 'w5ZU15Y2cLzZlu3jewauIlnzbKw-OAxbN9G5TbuuiDQ';
 let wallet: JsonWebKey | null = null;
 
 export const log = (message: any, options?: { color: 'red' | 'green' }) => {

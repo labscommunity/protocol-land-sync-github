@@ -1,1 +1,1 @@
-# protocol-land-sync-github
+# @protocol.land/sync-github
