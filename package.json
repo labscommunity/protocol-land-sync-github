@@ -1,6 +1,6 @@
 {
     "name": "@protocol.land/sync-github",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "Sync Protocol.Land repos to GitHub",
     "type": "module",
     "main": "dist/index.js",
