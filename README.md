@@ -53,7 +53,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Sync repo to GitHub
-        run: npx protocol-land-sync-github
+        run: npx @protocol.land/sync-github
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN || secrets.GITHUB_TOKEN }}
           WALLET: ${{ secrets.WALLET }}
