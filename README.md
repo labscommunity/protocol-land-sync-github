@@ -72,7 +72,7 @@ jobs:
 
 2. **Configuring Protocol Land Repository Settings**:
 
-![image](https://github.com/labscommunity/protocol-land-sync-github/assets/11836100/65483d12-eb1b-4453-b584-55709dce8562)
+![image](https://github.com/labscommunity/protocol-land-sync-github/assets/11836100/ff2ce620-1efc-4989-bfa3-3960befdaac3)
 
 Goto repository settings on Protocol Land. Then configure the following:
 
