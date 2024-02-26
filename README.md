@@ -24,7 +24,6 @@ To synchronize your Protocol Land repository with GitHub, you'll need to configu
 
 - Navigate to your GitHub repository's **Settings > Secrets and variables > Actions > New Repository Secret**.
 - **(Optional)** For syncing private repositories, add a new secret named **`WALLET`** with your Arweave wallet's JWK as the value.
-- Add a new secret named **`PL_REPO_ID`** with your Protocol Land Repository ID as the value. Your Protocol Land Repo ID can be found in the repository's URL, e.g., **`6ace6247-d267-463d-b5bd-7e50d98c3693`**.
 - You'll also need a Personal Access Token (PAT) with the appropriate permissions to sync from Protocol Land to GitHub. To create PAT, goto [Fine-grained tokens](https://github.com/settings/tokens?type=beta) to create a PAT. Set a token name, expiration, repository access `(All repositories or Only select repositories (Recommended))` and permissions `(Repository permissions -> Contents -> Read and write, Repository permissions -> Workflows -> Read and write)`. Finally, add a new secret named **`WORKFLOW_TOKEN`** with your PAT created as the value.
 
 3. **Setting Up the GitHub Workflow**:
@@ -42,6 +41,9 @@ on:
         description: "Force push"
         required: false
         default: "false"
+      repoId:
+        description: "Protocol Land Repo Id"
+        required: true
 
 permissions:
   contents: write
@@ -57,7 +59,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN || secrets.GITHUB_TOKEN }}
           WALLET: ${{ secrets.WALLET }}
-          PL_REPO_ID: ${{ secrets.PL_REPO_ID }}
+          PL_REPO_ID: ${{ inputs.repoId }}
           FORCE_PUSH: ${{ inputs.forcePush }}
           GH_REPO_NAME: ${{ github.repository }}
 ```
