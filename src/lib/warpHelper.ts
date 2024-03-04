@@ -28,8 +28,10 @@ export async function getRepo(id: string, destpath?: string) {
     let pl = getWarp(destpath).contract(CONTRACT_TXID);
 
     await pl
-        .syncState('https://dre-1.warp.cc/contract', { validity: true })
-        .catch((err: any) => console.log('DRE Sync Error: ', err?.message));
+        .syncState('https://pl-cache.saikranthi.dev/contract', {
+            validity: true,
+        })
+        .catch(() => {});
 
     // let warp throw error if it can't retrieve the repository
     const response = await pl.viewState({
