@@ -42,10 +42,10 @@
     },
     "dependencies": {
         "@amplitude/analytics-node": "^1.3.5",
+        "@permaweb/aoconnect": "^0.0.48",
         "arweave": "^1.14.4",
         "dotenv": "^16.4.2",
         "jszip": "^3.10.1",
-        "node-machine-id": "^1.1.12",
-        "warp-contracts": "^1.4.34"
+        "node-machine-id": "^1.1.12"
     }
 }

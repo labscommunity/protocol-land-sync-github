@@ -36,7 +36,7 @@ export const main = async () => {
 
         process.chdir(currentDirectory);
 
-        clearCache(tmpPath, { keepFolders: ['cache'] });
+        clearCache(tmpPath, { keepFolders: [] });
     } catch (error: any) {
         log(error?.message || error, { color: 'red' });
         process.exit(1);
