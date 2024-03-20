@@ -13,7 +13,7 @@ export async function getRepo(id: string) {
     const { Messages } = await dryrun({
         process: AOS_PROCESS_ID,
         tags: getTags({
-            Action: 'Get-Repository',
+            Action: 'Get-Repo',
             Id: id,
             Fields: JSON.stringify([
                 'id',
