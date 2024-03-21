@@ -1,4 +1,4 @@
-import { getRepo } from './warpHelper';
+import { getRepo } from './aoHelper';
 import { spawn } from 'child_process';
 import { arweaveDownload } from './arweaveHelper';
 import { unpackGitRepo } from './zipHelper';
@@ -13,10 +13,10 @@ export const downloadProtocolLandRepo = async (
 ) => {
     log(`Getting latest repo from Protocol.Land into '${destPath}' ...`);
 
-    // find repo in Protocol Land's warp contract
+    // find repo in Protocol Land's AO contract
     let repo: Repo | undefined;
     try {
-        repo = await getRepo(repoId, destPath);
+        repo = await getRepo(repoId);
     } catch (err) {
         log(err);
     }
@@ -70,9 +70,9 @@ export const downloadProtocolLandRepo = async (
         process.exit(1);
     }
 
-    // rm -rf everything but the bare repo and warp cache (discard stdout)
+    // rm -rf everything but the bare repo
     try {
-        clearCache(destPath, { keepFolders: ['cache', repo.id] });
+        clearCache(destPath, { keepFolders: [repo.id] });
     } catch {}
 
     return repo;
